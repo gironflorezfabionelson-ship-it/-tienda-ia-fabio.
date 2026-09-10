@@ -18,9 +18,7 @@ function setMarket(code) {
   const market = markets[code] || markets.global;
   localStorage.setItem('comprasmart-market', code);
   marketButton.textContent = `Mercado actual: ${market.label}`;
-  document.querySelectorAll('.merchant').forEach((node, index) => {
-    node.textContent = market.stores[index % market.stores.length];
-  });
+  
 }
 
 function filterProducts() {
