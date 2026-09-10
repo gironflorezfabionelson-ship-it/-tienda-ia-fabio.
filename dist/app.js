@@ -18,7 +18,6 @@ function setMarket(code) {
   const market = markets[code] || markets.global;
   localStorage.setItem('comprasmart-market', code);
   marketButton.textContent = `Mercado actual: ${market.label}`;
-  
 }
 
 function filterProducts() {
@@ -43,13 +42,6 @@ searchInput.addEventListener('input', filterProducts);
 countrySelect.addEventListener('change', event => setMarket(event.target.value));
 marketButton.addEventListener('click', () => countrySelect.focus());
 
-document.querySelectorAll('.offer-button').forEach(button => button.addEventListener('click', () => {
-  clearTimeout(toastTimer);
-  toast.hidden = false;
-  toast.querySelector('span').textContent = `${button.dataset.product}: añadiremos aquí tu enlace de afiliado para ${markets[countrySelect.value].label}.`;
-  toastTimer = setTimeout(() => { toast.hidden = true; }, 5200);
-}));
-
 const menuButton = document.querySelector('#menuButton');
 const mobileNav = document.querySelector('#mobileNav');
 menuButton.addEventListener('click', () => {
@@ -66,3 +58,19 @@ const savedMarket = localStorage.getItem('comprasmart-market');
 if (savedMarket && markets[savedMarket]) countrySelect.value = savedMarket;
 setMarket(countrySelect.value);
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// Professional illustrative product visuals. Affiliate links and product copy remain untouched.
+const visualStyle = document.createElement('link');
+visualStyle.rel = 'stylesheet';
+visualStyle.href = 'product-visuals.css?v=2';
+document.head.appendChild(visualStyle);
+
+const visualClasses = ['charger','powerbank','headphones','dock','glasses','robot','watch','backpack','projector','coffee'];
+cards.forEach((card, index) => {
+  const art = card.querySelector('.product-art');
+  if (!art || !visualClasses[index]) return;
+  art.innerHTML = `<div class="product-visual"><div class="${visualClasses[index]}"></div></div><span class="visual-note">Imagen ilustrativa</span>`;
+  art.removeAttribute('aria-hidden');
+  art.setAttribute('role','img');
+  art.setAttribute('aria-label', `Representación ilustrativa de ${card.querySelector('h3')?.textContent || 'producto'}`);
+});
