@@ -59,7 +59,6 @@ if (savedMarket && markets[savedMarket]) countrySelect.value = savedMarket;
 setMarket(countrySelect.value);
 document.querySelector('#year').textContent = new Date().getFullYear();
 
-// Professional illustrative product visuals. Affiliate links and product copy remain untouched.
 const visualStyle = document.createElement('link');
 visualStyle.rel = 'stylesheet';
 visualStyle.href = 'product-visuals.css?v=2';
@@ -75,8 +74,6 @@ cards.forEach((card, index) => {
   art.setAttribute('aria-label', `Representación ilustrativa de ${card.querySelector('h3')?.textContent || 'producto'}`);
 });
 
-// Ratings verified manually on the linked Amazon Spain product pages on 11 Sep 2026.
-// They are displayed as a snapshot because Amazon ratings/review counts can change.
 const verifiedRatings = [
   { rating: '4,7', reviews: '14.382' },
   { rating: '4,5', reviews: '15.747' },
@@ -105,10 +102,10 @@ cards.forEach((card, index) => {
   title.insertAdjacentElement('afterend', rating);
 });
 
-// Guides: improve mobile spacing and add the second buying guide card.
+// Guides: leave enough room below the decorative banner and add the second guide.
 const guidesSection = document.querySelector('#guias');
 if (guidesSection) {
-  guidesSection.style.paddingTop = '72px';
+  guidesSection.style.paddingTop = '150px';
   guidesSection.style.marginTop = '34px';
   const firstGuide = guidesSection.querySelector('.section-heading')?.nextElementSibling;
   if (firstGuide) {
