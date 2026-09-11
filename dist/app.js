@@ -133,7 +133,7 @@ const decisionProfiles = [
 
 const decisionStyle = document.createElement('style');
 decisionStyle.textContent = `
-  .decision-points{display:grid;gap:8px;margin:14px 0 16px;padding:13px 14px;border:1px solid #e5eaf1;border-radius:14px;background:#fbfcfe}
+  .decision-points{display:grid;gap:8px;margin:14px 0 8px;padding:13px 14px;border:1px solid #e5eaf1;border-radius:14px;background:#fbfcfe}
   .decision-row{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:start;font-size:.84rem;line-height:1.45}
   .decision-row strong{color:#172033;font-size:.76rem;text-transform:uppercase;letter-spacing:.035em}
   .decision-row span{color:#556274}
@@ -142,22 +142,38 @@ decisionStyle.textContent = `
   .editorial-order-note{margin:0 0 22px;padding:13px 16px;border-left:4px solid #315efb;border-radius:10px;background:#f5f8ff;color:#475467;font-size:.9rem;line-height:1.55}
   .editorial-order-note strong{color:#172033}
   .trust-pick{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#fff;color:#174ea6;border:1px solid #d7e5ff;box-shadow:0 6px 16px rgba(35,74,120,.12);font-size:.68rem;font-weight:900;letter-spacing:.035em}
-  @media(max-width:620px){.decision-row{grid-template-columns:1fr;gap:2px}}
+  @media(max-width:620px){
+    .product-art{height:185px}
+    .product-body{padding:19px}
+    .product-body h3{font-size:1.2rem;margin-top:8px}
+    .product-body>p:not(.affiliate-note){min-height:0;margin-bottom:12px}
+    .verified-rating{margin:5px 0 8px!important;font-size:13px!important}
+    .product-meta{padding-top:11px;align-items:center}
+    .product-meta strong{font-size:.8rem}
+    .product-actions{gap:8px;margin-top:10px}
+    .offer-button{min-height:52px;margin-top:0;padding:13px 14px;font-size:.95rem;border-radius:13px;box-shadow:0 10px 22px rgba(8,103,242,.2)}
+    .guide-link{min-height:42px;padding:9px 12px;font-size:.88rem}
+    .decision-points{margin:11px 0 6px;padding:11px 12px}
+    .decision-row{grid-template-columns:1fr;gap:2px;font-size:.8rem}
+    .decision-row strong{font-size:.7rem}
+    .affiliate-note{margin-top:7px!important;font-size:.75rem!important}
+    .trust-pick{top:10px;left:10px;font-size:.61rem;padding:5px 8px}
+  }
 `;
 document.head.appendChild(decisionStyle);
 
 cards.forEach((card,index)=>{
   const profile = decisionProfiles[index];
   const body = card.querySelector('.product-body');
-  const description = body?.querySelector(':scope > p');
-  if(!profile || !body || !description || body.querySelector('.decision-points')) return;
+  const actions = body?.querySelector('.product-actions');
+  if(!profile || !body || !actions || body.querySelector('.decision-points')) return;
   const box = document.createElement('div');
   box.className = 'decision-points';
   box.innerHTML = `
     <div class="decision-row"><strong>Ideal para</strong><span>${profile.ideal}</span></div>
     <div class="decision-row"><strong>Punto fuerte</strong><span>${profile.strong}</span></div>
     <div class="decision-row caution"><strong>Revisa antes</strong><span>${profile.check}</span></div>`;
-  description.insertAdjacentElement('afterend', box);
+  actions.insertAdjacentElement('afterend', box);
 });
 
 // Orden editorial de la portada: primero productos con una combinación sólida
