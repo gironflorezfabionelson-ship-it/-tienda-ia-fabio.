@@ -139,19 +139,19 @@ decisionStyle.textContent = `
   .decision-row span{color:#556274}
   .decision-row.caution{padding-top:8px;border-top:1px dashed #d9e0ea}
   .product-card:hover .decision-points{border-color:#cfd9e7}
-  .editorial-order-note{margin:0 0 22px;padding:13px 16px;border-left:4px solid #315efb;border-radius:10px;background:#f5f8ff;color:#475467;font-size:.9rem;line-height:1.55}
+  .editorial-order-note{margin:0 0 18px;padding:11px 14px;border-left:4px solid #315efb;border-radius:10px;background:#f5f8ff;color:#475467;font-size:.86rem;line-height:1.45}
   .editorial-order-note strong{color:#172033}
   .trust-pick{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#fff;color:#174ea6;border:1px solid #d7e5ff;box-shadow:0 6px 16px rgba(35,74,120,.12);font-size:.68rem;font-weight:900;letter-spacing:.035em}
   @media(max-width:620px){
     .categories{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;overflow:visible!important;padding:2px 0 10px!important}
     .category{min-width:0!important;padding:9px 2px!important;border-radius:12px!important;gap:4px!important;font-size:.62rem!important;line-height:1.05!important}
     .category span{width:30px!important;height:30px!important;border-radius:9px!important;font-size:.9rem!important}
-    .product-trust{grid-template-columns:1fr!important;gap:8px!important;padding:13px 14px!important;margin-bottom:14px!important;border-radius:16px!important}
+    .product-trust{grid-template-columns:1fr!important;gap:8px!important;padding:13px 14px!important;margin-bottom:12px!important;border-radius:16px!important}
     .product-trust div{gap:8px!important}
     .product-trust .trust-icon{width:24px!important;height:24px!important;font-size:.78rem!important}
     .product-trust span{font-size:.78rem!important;line-height:1.35!important}
     .product-trust strong{font-size:.86rem!important;margin-bottom:1px!important}
-    .editorial-order-note{margin-bottom:15px!important;padding:10px 12px!important;font-size:.78rem!important;line-height:1.4!important}
+    .editorial-order-note{margin-bottom:12px!important;padding:8px 10px!important;font-size:.74rem!important;line-height:1.32!important}
     .product-art{height:185px}
     .featured-card .product-art{padding-top:18px}
     .featured-card .product-visual{transform:scale(.88) translateY(10px)!important}
@@ -187,9 +187,6 @@ cards.forEach((card,index)=>{
   actions.insertAdjacentElement('afterend', box);
 });
 
-// Orden editorial de la portada: primero productos con una combinación sólida
-// de valoración, volumen de opiniones y utilidad cotidiana. No altera las fichas,
-// los enlaces de afiliado ni el contenido que Google puede rastrear en el HTML.
 const preferredProductOrder = [
   'sony wh ch520 auriculares bluetooth',
   'anker nano ii cargador usb c 65w',
@@ -227,7 +224,7 @@ if (productGrid) {
   if (trustPanel && !document.querySelector('.editorial-order-note')) {
     const note = document.createElement('p');
     note.className = 'editorial-order-note';
-    note.innerHTML = '<strong>¿Por qué ves estos primero?</strong> Priorizamos señales de confianza visibles, como valoración, volumen de opiniones y utilidad práctica. El orden es editorial y no significa que un producto sea perfecto para todo el mundo.';
+    note.innerHTML = '<strong>¿Por qué ves estos primero?</strong> Priorizamos valoración, opiniones y utilidad práctica. El orden es editorial.';
     trustPanel.insertAdjacentElement('afterend', note);
   }
 }
