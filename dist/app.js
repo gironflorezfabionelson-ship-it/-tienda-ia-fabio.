@@ -102,7 +102,7 @@ cards.forEach((card, index) => {
   title.insertAdjacentElement('afterend', rating);
 });
 
-// Guides: leave enough room below the decorative banner and add the second guide.
+// Guides: keep clear spacing below the decorative banner and organize guide cards.
 const guidesSection = document.querySelector('#guias');
 if (guidesSection) {
   guidesSection.style.paddingTop = '150px';
@@ -114,9 +114,15 @@ if (guidesSection) {
     firstGuide.parentNode.insertBefore(grid, firstGuide);
     firstGuide.style.maxWidth = 'none';
     grid.appendChild(firstGuide);
+
     const secondGuide = document.createElement('div');
     secondGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
     secondGuide.innerHTML = '<span class="tag">Tecnología</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Power bank de 20.000mAh: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar capacidad, potencia de salida, puertos, cables, tamaño y compatibilidad antes de elegir una batería externa.</p><a class="button primary" href="guia-power-bank-20000mah.html">Leer la guía completa →</a>';
     grid.appendChild(secondGuide);
+
+    const thirdGuide = document.createElement('div');
+    thirdGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
+    thirdGuide.innerHTML = '<span class="tag">Hogar</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Robot aspirador: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar navegación, aspirado y fregado, estación automática, mantenimiento y adaptación a tu vivienda.</p><a class="button primary" href="guia-robot-aspirador.html">Leer la guía completa →</a>';
+    grid.appendChild(thirdGuide);
   }
 }
