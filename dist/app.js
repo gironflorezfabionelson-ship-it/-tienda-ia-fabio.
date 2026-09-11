@@ -142,6 +142,7 @@ decisionStyle.textContent = `
   .editorial-order-note{margin:0 0 18px;padding:11px 14px;border-left:4px solid #315efb;border-radius:10px;background:#f5f8ff;color:#475467;font-size:.86rem;line-height:1.45}
   .editorial-order-note strong{color:#172033}
   .trust-pick{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#fff;color:#174ea6;border:1px solid #d7e5ff;box-shadow:0 6px 16px rgba(35,74,120,.12);font-size:.68rem;font-weight:900;letter-spacing:.035em}
+  .affiliate-note{display:inline-flex;align-items:center;margin:7px 0 0!important;padding:4px 8px;border-radius:999px;background:#f7f9fc;color:#667085!important;font-size:.7rem!important;line-height:1.2!important;min-height:0!important}
   @media(max-width:620px){
     .categories{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;overflow:visible!important;padding:2px 0 10px!important}
     .category{min-width:0!important;padding:9px 2px!important;border-radius:12px!important;gap:4px!important;font-size:.62rem!important;line-height:1.05!important}
@@ -168,11 +169,16 @@ decisionStyle.textContent = `
     .decision-row{grid-template-columns:112px minmax(0,1fr);gap:7px;font-size:.75rem;line-height:1.3}
     .decision-row strong{font-size:.62rem;line-height:1.2;padding-top:2px;white-space:nowrap}
     .decision-row.caution{padding-top:6px}
-    .affiliate-note{margin-top:6px!important;font-size:.73rem!important}
+    .affiliate-note{margin-top:5px!important;padding:3px 7px!important;font-size:.66rem!important}
     .trust-pick{top:11px;left:11px;font-size:.6rem;padding:5px 8px}
   }
 `;
 document.head.appendChild(decisionStyle);
+
+document.querySelectorAll('.affiliate-note').forEach(note => {
+  note.textContent = 'Afiliado · Compra en Amazon.';
+  note.setAttribute('aria-label','Enlace de afiliado. La compra se realiza directamente en Amazon.');
+});
 
 cards.forEach((card,index)=>{
   const profile = decisionProfiles[index];
