@@ -165,7 +165,7 @@ decisionStyle.textContent = `
     .offer-button{min-height:52px;margin-top:0;padding:13px 14px;font-size:.95rem;border-radius:13px;box-shadow:0 10px 22px rgba(8,103,242,.2)}
     .guide-link{min-height:42px;padding:9px 12px;font-size:.88rem}
     .decision-points{gap:5px;margin:9px 0 5px;padding:9px 10px;border-radius:12px}
-    .decision-row{grid-template-columns:96px 1fr;gap:7px;font-size:.75rem;line-height:1.3}
+    .decision-row{grid-template-columns:112px minmax(0,1fr);gap:7px;font-size:.75rem;line-height:1.3}
     .decision-row strong{font-size:.62rem;line-height:1.2;padding-top:2px;white-space:nowrap}
     .decision-row.caution{padding-top:6px}
     .affiliate-note{margin-top:6px!important;font-size:.73rem!important}
