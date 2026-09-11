@@ -124,5 +124,10 @@ if (guidesSection) {
     thirdGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
     thirdGuide.innerHTML = '<span class="tag">Hogar</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Robot aspirador: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar navegación, aspirado y fregado, estación automática, mantenimiento y adaptación a tu vivienda.</p><a class="button primary" href="guia-robot-aspirador.html">Leer la guía completa →</a>';
     grid.appendChild(thirdGuide);
+
+    const fourthGuide = document.createElement('div');
+    fourthGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
+    fourthGuide.innerHTML = '<span class="tag">Viajes</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Mochila antirrobo para portátil: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar tamaño, compartimentos, comodidad, materiales y medidas de seguridad antes de elegir una mochila para portátil.</p><a class="button primary" href="guia-mochila-antirrobo-portatil.html">Leer la guía completa →</a>';
+    grid.appendChild(fourthGuide);
   }
 }
