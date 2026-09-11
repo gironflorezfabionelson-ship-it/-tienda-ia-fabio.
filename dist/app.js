@@ -104,3 +104,22 @@ cards.forEach((card, index) => {
   }
   title.insertAdjacentElement('afterend', rating);
 });
+
+// Guides: improve mobile spacing and add the second buying guide card.
+const guidesSection = document.querySelector('#guias');
+if (guidesSection) {
+  guidesSection.style.paddingTop = '72px';
+  guidesSection.style.marginTop = '34px';
+  const firstGuide = guidesSection.querySelector('.section-heading')?.nextElementSibling;
+  if (firstGuide) {
+    const grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1100px';
+    firstGuide.parentNode.insertBefore(grid, firstGuide);
+    firstGuide.style.maxWidth = 'none';
+    grid.appendChild(firstGuide);
+    const secondGuide = document.createElement('div');
+    secondGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
+    secondGuide.innerHTML = '<span class="tag">Tecnología</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Power bank de 20.000mAh: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar capacidad, potencia de salida, puertos, cables, tamaño y compatibilidad antes de elegir una batería externa.</p><a class="button primary" href="guia-power-bank-20000mah.html">Leer la guía completa →</a>';
+    grid.appendChild(secondGuide);
+  }
+}
