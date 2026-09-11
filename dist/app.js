@@ -74,3 +74,33 @@ cards.forEach((card, index) => {
   art.setAttribute('role','img');
   art.setAttribute('aria-label', `Representación ilustrativa de ${card.querySelector('h3')?.textContent || 'producto'}`);
 });
+
+// Ratings verified manually on the linked Amazon Spain product pages on 11 Sep 2026.
+// They are displayed as a snapshot because Amazon ratings/review counts can change.
+const verifiedRatings = [
+  { rating: '4,7', reviews: '14.382' },
+  { rating: '4,5', reviews: '15.747' },
+  { rating: '4,6', reviews: '45.447' },
+  { rating: '4,4', reviews: '2.349' },
+  { rating: '3,6', reviews: '120' },
+  { rating: '4,4', reviews: '389' },
+  { rating: '4,2', reviews: '1.478' },
+  { rating: '4,6', reviews: '9.933' },
+  { rating: '3,9', reviews: '140' },
+  { newOnAmazon: true }
+];
+
+cards.forEach((card, index) => {
+  const info = verifiedRatings[index];
+  const title = card.querySelector('h3');
+  if (!info || !title) return;
+  const rating = document.createElement('div');
+  rating.className = 'verified-rating';
+  rating.style.cssText = 'display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0 10px;font-size:14px;font-weight:700;color:#172033';
+  if (info.newOnAmazon) {
+    rating.innerHTML = '<span style="display:inline-flex;padding:5px 9px;border-radius:999px;background:#f2f4f7;color:#344054">Nuevo en Amazon</span>';
+  } else {
+    rating.innerHTML = `<span aria-label="${info.rating} de 5 estrellas" style="color:#f59e0b;letter-spacing:1px">★</span><span>${info.rating} de 5</span><span style="font-weight:600;color:#667085">(${info.reviews} valoraciones)</span>`;
+  }
+  title.insertAdjacentElement('afterend', rating);
+});
