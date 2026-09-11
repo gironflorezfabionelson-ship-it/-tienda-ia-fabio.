@@ -153,6 +153,8 @@ decisionStyle.textContent = `
     .product-trust strong{font-size:.86rem!important;margin-bottom:1px!important}
     .editorial-order-note{margin-bottom:15px!important;padding:10px 12px!important;font-size:.78rem!important;line-height:1.4!important}
     .product-art{height:185px}
+    .featured-card .product-art{padding-top:18px}
+    .featured-card .product-visual{transform:scale(.88) translateY(10px)!important}
     .product-body{padding:19px}
     .product-body h3{font-size:1.2rem;margin-top:8px}
     .product-body>p:not(.affiliate-note){min-height:0;margin-bottom:12px}
@@ -166,7 +168,7 @@ decisionStyle.textContent = `
     .decision-row{grid-template-columns:1fr;gap:2px;font-size:.8rem}
     .decision-row strong{font-size:.7rem}
     .affiliate-note{margin-top:7px!important;font-size:.75rem!important}
-    .trust-pick{top:10px;left:10px;font-size:.61rem;padding:5px 8px}
+    .trust-pick{top:11px;left:11px;font-size:.6rem;padding:5px 8px}
   }
 `;
 document.head.appendChild(decisionStyle);
@@ -212,7 +214,9 @@ if (productGrid) {
   const topPicks = preferredProductOrder.slice(0, 4);
   topPicks.forEach(name => {
     const card = cardByName.get(name);
-    if (!card || card.querySelector('.trust-pick')) return;
+    if (!card) return;
+    card.classList.add('featured-card');
+    if (card.querySelector('.trust-pick')) return;
     const badge = document.createElement('span');
     badge.className = 'trust-pick';
     badge.textContent = 'SELECCIÓN DESTACADA';
