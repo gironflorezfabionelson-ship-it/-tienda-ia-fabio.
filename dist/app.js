@@ -139,6 +139,9 @@ decisionStyle.textContent = `
   .decision-row span{color:#556274}
   .decision-row.caution{padding-top:8px;border-top:1px dashed #d9e0ea}
   .product-card:hover .decision-points{border-color:#cfd9e7}
+  .editorial-order-note{margin:0 0 22px;padding:13px 16px;border-left:4px solid #315efb;border-radius:10px;background:#f5f8ff;color:#475467;font-size:.9rem;line-height:1.55}
+  .editorial-order-note strong{color:#172033}
+  .trust-pick{position:absolute;left:14px;top:14px;z-index:3;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#fff;color:#174ea6;border:1px solid #d7e5ff;box-shadow:0 6px 16px rgba(35,74,120,.12);font-size:.68rem;font-weight:900;letter-spacing:.035em}
   @media(max-width:620px){.decision-row{grid-template-columns:1fr;gap:2px}}
 `;
 document.head.appendChild(decisionStyle);
@@ -156,3 +159,46 @@ cards.forEach((card,index)=>{
     <div class="decision-row caution"><strong>Revisa antes</strong><span>${profile.check}</span></div>`;
   description.insertAdjacentElement('afterend', box);
 });
+
+// Orden editorial de la portada: primero productos con una combinación sólida
+// de valoración, volumen de opiniones y utilidad cotidiana. No altera las fichas,
+// los enlaces de afiliado ni el contenido que Google puede rastrear en el HTML.
+const preferredProductOrder = [
+  'sony wh ch520 auriculares bluetooth',
+  'anker nano ii cargador usb c 65w',
+  'wenig mochila antirrobo impermeable portatil 15.6 usb viaje trabajo',
+  'anker zolo power bank 20000mah 45w',
+  'robot aspirador roborock qrevo s pro hogar limpieza',
+  'cargador inalambrico 3 en 1 iphone airpods apple watch',
+  'kibfle reloj inteligente mujer hombre smartwatch bluetooth voz llamadas salud deporte',
+  'reiie proyector mini 4k 1080p full hd android 11 wifi 6 bluetooth',
+  'smartia gafas inteligentes camara ia bluetooth',
+  'maehihw cafetera portatil capsulas multicapsulas cafe molido viajes oficina camping'
+];
+
+const productGrid = document.querySelector('#productGrid');
+if (productGrid) {
+  const cardByName = new Map(cards.map(card => [card.dataset.name, card]));
+  preferredProductOrder.forEach(name => {
+    const card = cardByName.get(name);
+    if (card) productGrid.appendChild(card);
+  });
+
+  const topPicks = preferredProductOrder.slice(0, 4);
+  topPicks.forEach(name => {
+    const card = cardByName.get(name);
+    if (!card || card.querySelector('.trust-pick')) return;
+    const badge = document.createElement('span');
+    badge.className = 'trust-pick';
+    badge.textContent = 'SELECCIÓN DESTACADA';
+    card.appendChild(badge);
+  });
+
+  const trustPanel = document.querySelector('.product-trust');
+  if (trustPanel && !document.querySelector('.editorial-order-note')) {
+    const note = document.createElement('p');
+    note.className = 'editorial-order-note';
+    note.innerHTML = '<strong>¿Por qué ves estos primero?</strong> Priorizamos señales de confianza visibles, como valoración, volumen de opiniones y utilidad práctica. El orden es editorial y no significa que un producto sea perfecto para todo el mundo.';
+    trustPanel.insertAdjacentElement('afterend', note);
+  }
+}
