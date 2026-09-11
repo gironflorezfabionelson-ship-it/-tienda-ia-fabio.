@@ -164,10 +164,11 @@ decisionStyle.textContent = `
     .product-actions{gap:8px;margin-top:10px}
     .offer-button{min-height:52px;margin-top:0;padding:13px 14px;font-size:.95rem;border-radius:13px;box-shadow:0 10px 22px rgba(8,103,242,.2)}
     .guide-link{min-height:42px;padding:9px 12px;font-size:.88rem}
-    .decision-points{margin:11px 0 6px;padding:11px 12px}
-    .decision-row{grid-template-columns:1fr;gap:2px;font-size:.8rem}
-    .decision-row strong{font-size:.7rem}
-    .affiliate-note{margin-top:7px!important;font-size:.75rem!important}
+    .decision-points{gap:5px;margin:9px 0 5px;padding:9px 10px;border-radius:12px}
+    .decision-row{grid-template-columns:78px 1fr;gap:7px;font-size:.75rem;line-height:1.3}
+    .decision-row strong{font-size:.64rem;line-height:1.25;padding-top:1px}
+    .decision-row.caution{padding-top:6px}
+    .affiliate-note{margin-top:6px!important;font-size:.73rem!important}
     .trust-pick{top:11px;left:11px;font-size:.6rem;padding:5px 8px}
   }
 `;
