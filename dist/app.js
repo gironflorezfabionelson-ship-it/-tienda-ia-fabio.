@@ -10,153 +10,22 @@ const cards = [...document.querySelectorAll('.product-card')];
 const categoryButtons = [...document.querySelectorAll('.category')];
 const searchInput = document.querySelector('#searchInput');
 const emptyState = document.querySelector('#emptyState');
-const toast = document.querySelector('#toast');
 let activeCategory = 'all';
-let toastTimer;
 
-function setMarket(code) {
-  const market = markets[code] || markets.global;
-  localStorage.setItem('comprasmart-market', code);
-  marketButton.textContent = `Mercado actual: ${market.label}`;
-}
-
-function filterProducts() {
-  const query = searchInput.value.trim().toLocaleLowerCase('es');
-  let visible = 0;
-  cards.forEach(card => {
-    const categoryMatch = activeCategory === 'all' || card.dataset.category === activeCategory;
-    const searchMatch = !query || card.dataset.name.includes(query) || card.textContent.toLocaleLowerCase('es').includes(query);
-    card.hidden = !(categoryMatch && searchMatch);
-    if (!card.hidden) visible += 1;
-  });
-  emptyState.hidden = visible !== 0;
-}
-
-categoryButtons.forEach(button => button.addEventListener('click', () => {
-  activeCategory = button.dataset.category;
-  categoryButtons.forEach(item => item.classList.toggle('active', item === button));
-  filterProducts();
-}));
-
-searchInput.addEventListener('input', filterProducts);
-countrySelect.addEventListener('change', event => setMarket(event.target.value));
-marketButton.addEventListener('click', () => countrySelect.focus());
-
-const menuButton = document.querySelector('#menuButton');
-const mobileNav = document.querySelector('#mobileNav');
-menuButton.addEventListener('click', () => {
-  const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!isOpen));
-  mobileNav.hidden = isOpen;
-});
-mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-  mobileNav.hidden = true;
-  menuButton.setAttribute('aria-expanded', 'false');
-}));
-
-const savedMarket = localStorage.getItem('comprasmart-market');
-if (savedMarket && markets[savedMarket]) countrySelect.value = savedMarket;
-setMarket(countrySelect.value);
-document.querySelector('#year').textContent = new Date().getFullYear();
-
-const visualStyle = document.createElement('link');
-visualStyle.rel = 'stylesheet';
-visualStyle.href = 'product-visuals.css?v=2';
-document.head.appendChild(visualStyle);
-
+function setMarket(code) { const market = markets[code] || markets.global; localStorage.setItem('comprasmart-market', code); marketButton.textContent = `Mercado actual: ${market.label}`; }
+function filterProducts() { const query = searchInput.value.trim().toLocaleLowerCase('es'); let visible = 0; cards.forEach(card => { const categoryMatch = activeCategory === 'all' || card.dataset.category === activeCategory; const searchMatch = !query || card.dataset.name.includes(query) || card.textContent.toLocaleLowerCase('es').includes(query); card.hidden = !(categoryMatch && searchMatch); if (!card.hidden) visible += 1; }); emptyState.hidden = visible !== 0; }
+categoryButtons.forEach(button => button.addEventListener('click', () => { activeCategory = button.dataset.category; categoryButtons.forEach(item => item.classList.toggle('active', item === button)); filterProducts(); }));
+searchInput.addEventListener('input', filterProducts); countrySelect.addEventListener('change', event => setMarket(event.target.value)); marketButton.addEventListener('click', () => countrySelect.focus());
+const menuButton = document.querySelector('#menuButton'); const mobileNav = document.querySelector('#mobileNav');
+menuButton.addEventListener('click', () => { const isOpen = menuButton.getAttribute('aria-expanded') === 'true'; menuButton.setAttribute('aria-expanded', String(!isOpen)); mobileNav.hidden = isOpen; });
+mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mobileNav.hidden = true; menuButton.setAttribute('aria-expanded', 'false'); }));
+const savedMarket = localStorage.getItem('comprasmart-market'); if (savedMarket && markets[savedMarket]) countrySelect.value = savedMarket; setMarket(countrySelect.value); document.querySelector('#year').textContent = new Date().getFullYear();
+const visualStyle = document.createElement('link'); visualStyle.rel = 'stylesheet'; visualStyle.href = 'product-visuals.css?v=2'; document.head.appendChild(visualStyle);
 const visualClasses = ['charger','powerbank','headphones','dock','glasses','robot','watch','backpack','projector','coffee'];
-cards.forEach((card, index) => {
-  const art = card.querySelector('.product-art');
-  if (!art || !visualClasses[index]) return;
-  art.innerHTML = `<div class="product-visual"><div class="${visualClasses[index]}"></div></div><span class="visual-note">Imagen ilustrativa</span>`;
-  art.removeAttribute('aria-hidden');
-  art.setAttribute('role','img');
-  art.setAttribute('aria-label', `Representación ilustrativa de ${card.querySelector('h3')?.textContent || 'producto'}`);
-});
+cards.forEach((card,index)=>{const art=card.querySelector('.product-art');if(!art||!visualClasses[index])return;art.innerHTML=`<div class="product-visual"><div class="${visualClasses[index]}"></div></div><span class="visual-note">Imagen ilustrativa</span>`;art.removeAttribute('aria-hidden');art.setAttribute('role','img');art.setAttribute('aria-label',`Representación ilustrativa de ${card.querySelector('h3')?.textContent||'producto'}`);});
+const verifiedRatings=[{rating:'4,7',reviews:'14.382'},{rating:'4,5',reviews:'15.747'},{rating:'4,6',reviews:'45.447'},{rating:'4,4',reviews:'2.349'},{rating:'3,6',reviews:'120'},{rating:'4,4',reviews:'389'},{rating:'4,2',reviews:'1.478'},{rating:'4,6',reviews:'9.933'},{rating:'3,9',reviews:'140'},{newOnAmazon:true}];
+cards.forEach((card,index)=>{const info=verifiedRatings[index],title=card.querySelector('h3');if(!info||!title)return;const rating=document.createElement('div');rating.className='verified-rating';rating.style.cssText='display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0 10px;font-size:14px;font-weight:700;color:#172033';rating.innerHTML=info.newOnAmazon?'<span style="display:inline-flex;padding:5px 9px;border-radius:999px;background:#f2f4f7;color:#344054">Nuevo en Amazon</span>':`<span aria-label="${info.rating} de 5 estrellas" style="color:#f59e0b;letter-spacing:1px">★</span><span>${info.rating} de 5</span><span style="font-weight:600;color:#667085">(${info.reviews} valoraciones)</span>`;title.insertAdjacentElement('afterend',rating);});
 
-const verifiedRatings = [
-  { rating: '4,7', reviews: '14.382' },
-  { rating: '4,5', reviews: '15.747' },
-  { rating: '4,6', reviews: '45.447' },
-  { rating: '4,4', reviews: '2.349' },
-  { rating: '3,6', reviews: '120' },
-  { rating: '4,4', reviews: '389' },
-  { rating: '4,2', reviews: '1.478' },
-  { rating: '4,6', reviews: '9.933' },
-  { rating: '3,9', reviews: '140' },
-  { newOnAmazon: true }
-];
-
-cards.forEach((card, index) => {
-  const info = verifiedRatings[index];
-  const title = card.querySelector('h3');
-  if (!info || !title) return;
-  const rating = document.createElement('div');
-  rating.className = 'verified-rating';
-  rating.style.cssText = 'display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:8px 0 10px;font-size:14px;font-weight:700;color:#172033';
-  if (info.newOnAmazon) {
-    rating.innerHTML = '<span style="display:inline-flex;padding:5px 9px;border-radius:999px;background:#f2f4f7;color:#344054">Nuevo en Amazon</span>';
-  } else {
-    rating.innerHTML = `<span aria-label="${info.rating} de 5 estrellas" style="color:#f59e0b;letter-spacing:1px">★</span><span>${info.rating} de 5</span><span style="font-weight:600;color:#667085">(${info.reviews} valoraciones)</span>`;
-  }
-  title.insertAdjacentElement('afterend', rating);
-});
-
-// Guides: keep clear spacing below the decorative banner and organize guide cards.
-const guidesSection = document.querySelector('#guias');
-if (guidesSection) {
-  guidesSection.style.paddingTop = '150px';
-  guidesSection.style.marginTop = '34px';
-  const firstGuide = guidesSection.querySelector('.section-heading')?.nextElementSibling;
-  if (firstGuide) {
-    const grid = document.createElement('div');
-    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1100px';
-    firstGuide.parentNode.insertBefore(grid, firstGuide);
-    firstGuide.style.maxWidth = 'none';
-    grid.appendChild(firstGuide);
-
-    const secondGuide = document.createElement('div');
-    secondGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
-    secondGuide.innerHTML = '<span class="tag">Tecnología</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Power bank de 20.000mAh: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar capacidad, potencia de salida, puertos, cables, tamaño y compatibilidad antes de elegir una batería externa.</p><a class="button primary" href="guia-power-bank-20000mah.html">Leer la guía completa →</a>';
-    grid.appendChild(secondGuide);
-
-    const thirdGuide = document.createElement('div');
-    thirdGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
-    thirdGuide.innerHTML = '<span class="tag">Hogar</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Robot aspirador: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar navegación, aspirado y fregado, estación automática, mantenimiento y adaptación a tu vivienda.</p><a class="button primary" href="guia-robot-aspirador.html">Leer la guía completa →</a>';
-    grid.appendChild(thirdGuide);
-
-    const fourthGuide = document.createElement('div');
-    fourthGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
-    fourthGuide.innerHTML = '<span class="tag">Viajes</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Mochila antirrobo para portátil: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar tamaño, compartimentos, comodidad, materiales y medidas de seguridad antes de elegir una mochila para portátil.</p><a class="button primary" href="guia-mochila-antirrobo-portatil.html">Leer la guía completa →</a>';
-    grid.appendChild(fourthGuide);
-
-    const fifthGuide = document.createElement('div');
-    fifthGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
-    fifthGuide.innerHTML = '<span class="tag">Tecnología</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Auriculares Bluetooth: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Compara comodidad, autonomía, conexión, controles y uso previsto antes de elegir unos auriculares inalámbricos.</p><a class="button primary" href="guia-auriculares-bluetooth-sony-wh-ch520.html">Leer la guía completa →</a>';
-    grid.appendChild(fifthGuide);
-  }
-}
-
-// Add a visible trust/transparency path without changing the main layout.
-const desktopNav = document.querySelector('.desktop-nav');
-if (desktopNav && !desktopNav.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
-  const aboutLink = document.createElement('a');
-  aboutLink.href = 'sobre-compra-smart-ia.html';
-  aboutLink.textContent = 'Sobre nosotros';
-  desktopNav.appendChild(aboutLink);
-}
-if (mobileNav && !mobileNav.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
-  const aboutMobileLink = document.createElement('a');
-  aboutMobileLink.href = 'sobre-compra-smart-ia.html';
-  aboutMobileLink.textContent = 'Sobre nosotros';
-  mobileNav.appendChild(aboutMobileLink);
-}
-const footerTransparency = [...document.querySelectorAll('footer h3')].find(item => item.textContent.trim() === 'Transparencia')?.parentElement;
-if (footerTransparency && !footerTransparency.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
-  const trustLink = document.createElement('a');
-  trustLink.href = 'sobre-compra-smart-ia.html';
-  trustLink.textContent = 'Cómo elegimos y afiliación';
-  trustLink.style.display = 'inline-block';
-  trustLink.style.marginTop = '12px';
-  footerTransparency.appendChild(trustLink);
-}
+const guidesSection=document.querySelector('#guias');
+if(guidesSection){guidesSection.style.paddingTop='150px';guidesSection.style.marginTop='34px';const firstGuide=guidesSection.querySelector('.section-heading')?.nextElementSibling;if(firstGuide){const grid=document.createElement('div');grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1100px';firstGuide.parentNode.insertBefore(grid,firstGuide);firstGuide.style.maxWidth='none';grid.appendChild(firstGuide);const guides=[['Tecnología','Power bank de 20.000mAh: qué mirar antes de comprar','Aprende a comparar capacidad, potencia de salida, puertos, cables, tamaño y compatibilidad antes de elegir una batería externa.','guia-power-bank-20000mah.html'],['Hogar','Robot aspirador: qué mirar antes de comprar','Aprende a comparar navegación, aspirado y fregado, estación automática, mantenimiento y adaptación a tu vivienda.','guia-robot-aspirador.html'],['Viajes','Mochila antirrobo para portátil: qué mirar antes de comprar','Aprende a comparar tamaño, compartimentos, comodidad, materiales y medidas de seguridad antes de elegir una mochila para portátil.','guia-mochila-antirrobo-portatil.html'],['Tecnología','Auriculares Bluetooth: qué mirar antes de comprar','Compara comodidad, autonomía, conexión, controles y uso previsto antes de elegir unos auriculares inalámbricos.','guia-auriculares-bluetooth-sony-wh-ch520.html'],['Tecnología','Cargador inalámbrico 3 en 1: qué mirar antes de comprar','Compara compatibilidad, potencia, alineación magnética, adaptador, seguridad y comodidad de uso.','guia-cargador-inalambrico-3-en-1.html']];guides.forEach(([tag,title,text,href])=>{const el=document.createElement('div');el.style.cssText='padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';el.innerHTML=`<span class="tag">${tag}</span><h3 style="font-size:1.6rem;margin:14px 0 10px">${title}</h3><p style="margin:0 0 20px;line-height:1.7">${text}</p><a class="button primary" href="${href}">Leer la guía completa →</a>`;grid.appendChild(el);});}}
+const desktopNav=document.querySelector('.desktop-nav');if(desktopNav&&!desktopNav.querySelector('a[href="sobre-compra-smart-ia.html"]')){const a=document.createElement('a');a.href='sobre-compra-smart-ia.html';a.textContent='Sobre nosotros';desktopNav.appendChild(a);}if(mobileNav&&!mobileNav.querySelector('a[href="sobre-compra-smart-ia.html"]')){const a=document.createElement('a');a.href='sobre-compra-smart-ia.html';a.textContent='Sobre nosotros';mobileNav.appendChild(a);}const footerTransparency=[...document.querySelectorAll('footer h3')].find(item=>item.textContent.trim()==='Transparencia')?.parentElement;if(footerTransparency&&!footerTransparency.querySelector('a[href="sobre-compra-smart-ia.html"]')){const a=document.createElement('a');a.href='sobre-compra-smart-ia.html';a.textContent='Cómo elegimos y afiliación';a.style.display='inline-block';a.style.marginTop='12px';footerTransparency.appendChild(a);}
