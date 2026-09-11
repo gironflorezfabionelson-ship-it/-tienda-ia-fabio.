@@ -153,9 +153,9 @@ decisionStyle.textContent = `
     .product-trust span{font-size:.78rem!important;line-height:1.35!important}
     .product-trust strong{font-size:.86rem!important;margin-bottom:1px!important}
     .editorial-order-note{margin-bottom:12px!important;padding:8px 10px!important;font-size:.74rem!important;line-height:1.32!important}
-    .product-art{height:185px}
-    .featured-card .product-art{padding-top:18px}
-    .featured-card .product-visual{transform:scale(.88) translateY(10px)!important}
+    .product-art{height:165px}
+    .featured-card .product-art{padding-top:14px}
+    .featured-card .product-visual{transform:scale(.82) translateY(6px)!important}
     .product-body{padding:19px}
     .product-body h3{font-size:1.2rem;margin-top:8px}
     .product-body>p:not(.affiliate-note){min-height:0;margin-bottom:12px}
@@ -170,7 +170,7 @@ decisionStyle.textContent = `
     .decision-row strong{font-size:.62rem;line-height:1.2;padding-top:2px;white-space:nowrap}
     .decision-row.caution{padding-top:6px}
     .affiliate-note{margin-top:5px!important;padding:3px 7px!important;font-size:.66rem!important}
-    .trust-pick{top:11px;left:11px;font-size:.6rem;padding:5px 8px}
+    .trust-pick{top:9px;left:11px;font-size:.6rem;padding:5px 8px}
   }
 `;
 document.head.appendChild(decisionStyle);
