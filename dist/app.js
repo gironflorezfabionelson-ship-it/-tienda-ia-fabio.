@@ -129,5 +129,34 @@ if (guidesSection) {
     fourthGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
     fourthGuide.innerHTML = '<span class="tag">Viajes</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Mochila antirrobo para portátil: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Aprende a comparar tamaño, compartimentos, comodidad, materiales y medidas de seguridad antes de elegir una mochila para portátil.</p><a class="button primary" href="guia-mochila-antirrobo-portatil.html">Leer la guía completa →</a>';
     grid.appendChild(fourthGuide);
+
+    const fifthGuide = document.createElement('div');
+    fifthGuide.style.cssText = 'padding:28px;border:1px solid #e6eaf0;border-radius:24px;background:#f7f9fc';
+    fifthGuide.innerHTML = '<span class="tag">Tecnología</span><h3 style="font-size:1.6rem;margin:14px 0 10px">Auriculares Bluetooth: qué mirar antes de comprar</h3><p style="margin:0 0 20px;line-height:1.7">Compara comodidad, autonomía, conexión, controles y uso previsto antes de elegir unos auriculares inalámbricos.</p><a class="button primary" href="guia-auriculares-bluetooth-sony-wh-ch520.html">Leer la guía completa →</a>';
+    grid.appendChild(fifthGuide);
   }
+}
+
+// Add a visible trust/transparency path without changing the main layout.
+const desktopNav = document.querySelector('.desktop-nav');
+if (desktopNav && !desktopNav.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
+  const aboutLink = document.createElement('a');
+  aboutLink.href = 'sobre-compra-smart-ia.html';
+  aboutLink.textContent = 'Sobre nosotros';
+  desktopNav.appendChild(aboutLink);
+}
+if (mobileNav && !mobileNav.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
+  const aboutMobileLink = document.createElement('a');
+  aboutMobileLink.href = 'sobre-compra-smart-ia.html';
+  aboutMobileLink.textContent = 'Sobre nosotros';
+  mobileNav.appendChild(aboutMobileLink);
+}
+const footerTransparency = [...document.querySelectorAll('footer h3')].find(item => item.textContent.trim() === 'Transparencia')?.parentElement;
+if (footerTransparency && !footerTransparency.querySelector('a[href="sobre-compra-smart-ia.html"]')) {
+  const trustLink = document.createElement('a');
+  trustLink.href = 'sobre-compra-smart-ia.html';
+  trustLink.textContent = 'Cómo elegimos y afiliación';
+  trustLink.style.display = 'inline-block';
+  trustLink.style.marginTop = '12px';
+  footerTransparency.appendChild(trustLink);
 }
