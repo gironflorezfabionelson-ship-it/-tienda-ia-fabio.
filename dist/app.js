@@ -117,3 +117,42 @@ cards.forEach((card,index)=>{
     : `<span aria-label="${info.rating} de 5 estrellas" style="color:#f59e0b;letter-spacing:1px">★</span><span>${info.rating} de 5</span><span style="font-weight:600;color:#667085">(${info.reviews} valoraciones)</span>`;
   title.insertAdjacentElement('afterend',rating);
 });
+
+const decisionProfiles = [
+  {ideal:'Quien carga móvil, tablet o portátil con un solo cargador.',strong:'65W y tres puertos en un formato compacto.',check:'Confirma la potencia que recibe cada dispositivo y el reparto entre puertos.'},
+  {ideal:'Viajes, jornadas largas y personas que usan varios dispositivos.',strong:'20.000mAh, hasta 45W y cables USB-C integrados.',check:'Revisa peso, tamaño y compatibilidad con la carga rápida de tus equipos.'},
+  {ideal:'Música, llamadas y uso diario sin buscar un modelo pesado.',strong:'Diseño ligero y hasta 50 horas de autonomía anunciada.',check:'Valora si prefieres formato supraaural y si necesitas cancelación de ruido.'},
+  {ideal:'Usuarios con varios dispositivos Apple que quieren ordenar el escritorio.',strong:'Carga tres dispositivos y se puede plegar para transportar.',check:'Comprueba compatibilidad exacta con tu iPhone, Apple Watch, AirPods y funda.'},
+  {ideal:'Quien quiere explorar cámara, audio y funciones de IA en unas gafas.',strong:'Combina cámara, manos libres y funciones inteligentes en una montura.',check:'Revisa autonomía, aplicación necesaria y privacidad antes de grabar o usar IA.'},
+  {ideal:'Hogares que quieren reducir parte de la limpieza manual diaria.',strong:'Base todo en uno para automatizar más tareas de mantenimiento.',check:'Compara navegación, fregado, consumibles y espacio necesario para la base.'},
+  {ideal:'Notificaciones, llamadas y seguimiento general de actividad desde la muñeca.',strong:'Llamadas Bluetooth, pantalla de 1,85 pulgadas y varios sensores.',check:'Las funciones de bienestar no sustituyen equipos médicos; revisa además compatibilidad y autonomía.'},
+  {ideal:'Trabajo, estudio y viajes con portátil de hasta 15,6 pulgadas.',strong:'Compartimento para portátil, diseño antirrobo, material impermeable y puerto USB.',check:'Comprueba medidas reales del portátil, capacidad y comodidad para el peso que llevarás.'},
+  {ideal:'Películas y entretenimiento en dormitorios o espacios donde puedas controlar la luz.',strong:'Formato portátil con Android 11, WiFi 6, Bluetooth y giro de 180°.',check:'Prioriza resolución nativa, brillo real y distancia de proyección, no solo la etiqueta “4K”.'},
+  {ideal:'Viajes, oficina o camping cuando quieres preparar café fuera de casa.',strong:'Formato portátil compatible con cápsulas y café molido.',check:'Confirma si calienta el agua por sí sola, la alimentación y la limpieza necesaria.'}
+];
+
+const decisionStyle = document.createElement('style');
+decisionStyle.textContent = `
+  .decision-points{display:grid;gap:8px;margin:14px 0 16px;padding:13px 14px;border:1px solid #e5eaf1;border-radius:14px;background:#fbfcfe}
+  .decision-row{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:start;font-size:.84rem;line-height:1.45}
+  .decision-row strong{color:#172033;font-size:.76rem;text-transform:uppercase;letter-spacing:.035em}
+  .decision-row span{color:#556274}
+  .decision-row.caution{padding-top:8px;border-top:1px dashed #d9e0ea}
+  .product-card:hover .decision-points{border-color:#cfd9e7}
+  @media(max-width:620px){.decision-row{grid-template-columns:1fr;gap:2px}}
+`;
+document.head.appendChild(decisionStyle);
+
+cards.forEach((card,index)=>{
+  const profile = decisionProfiles[index];
+  const body = card.querySelector('.product-body');
+  const description = body?.querySelector(':scope > p');
+  if(!profile || !body || !description || body.querySelector('.decision-points')) return;
+  const box = document.createElement('div');
+  box.className = 'decision-points';
+  box.innerHTML = `
+    <div class="decision-row"><strong>Ideal para</strong><span>${profile.ideal}</span></div>
+    <div class="decision-row"><strong>Punto fuerte</strong><span>${profile.strong}</span></div>
+    <div class="decision-row caution"><strong>Revisa antes</strong><span>${profile.check}</span></div>`;
+  description.insertAdjacentElement('afterend', box);
+});
