@@ -6,6 +6,34 @@ const markets = {
 
 const countrySelect = document.querySelector('#countrySelect');
 const marketButton = document.querySelector('#marketButton');
+
+// Nuevas recomendaciones: se insertan antes de construir la lista de tarjetas para
+// que búsqueda, categorías, bloques de decisión y orden editorial funcionen igual.
+const initialProductGrid = document.querySelector('#productGrid');
+if (initialProductGrid && !initialProductGrid.querySelector('[data-name="tp link tapo p110m enchufe inteligente matter energia"]')) {
+  initialProductGrid.insertAdjacentHTML('beforeend', `
+    <article class="product-card" data-category="hogar" data-name="tp link tapo p110m enchufe inteligente matter energia">
+      <div class="product-art mint" aria-hidden="true">🔌</div>
+      <div class="product-body"><span class="tag">Hogar</span><h3>TP-Link Tapo P110M Enchufe Inteligente Matter</h3><p>Enchufe Wi‑Fi compacto con control desde la app, programación, compatibilidad Matter y monitorización de consumo.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/dp/B0CJ9R466Z?tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+    </article>
+    <article class="product-card" data-category="tecnologia" data-name="ugreen nexode cargador usb c 100w 4 puertos gan">
+      <div class="product-art blue" aria-hidden="true">⚡</div>
+      <div class="product-body"><span class="tag">Tecnología</span><h3>UGREEN Nexode Cargador USB-C 100W</h3><p>Cargador GaN de cuatro puertos pensado para combinar portátil, móvil, tablet y otros accesorios desde un solo adaptador.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/dp/B091TV6LWN?tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+    </article>
+    <article class="product-card" data-category="bienestar" data-name="xiaomi smart scale s400 bascula inteligente composicion corporal">
+      <div class="product-art violet" aria-hidden="true">⚖️</div>
+      <div class="product-body"><span class="tag">Bienestar</span><h3>Xiaomi Smart Scale S400</h3><p>Báscula inteligente para seguir el peso y consultar estimaciones de composición corporal desde la aplicación compatible.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/s?k=Xiaomi+Smart+Scale+S400&tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver opciones en Amazon <span>→</span></a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+    </article>
+    <article class="product-card" data-category="tecnologia" data-name="logitech pebble mouse 2 m350s raton bluetooth silencioso">
+      <div class="product-art blue" aria-hidden="true">🖱️</div>
+      <div class="product-body"><span class="tag">Tecnología</span><h3>Logitech Pebble Mouse 2 M350s</h3><p>Ratón Bluetooth compacto y ligero con clics silenciosos, pensado para trabajo, estudio y movilidad.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/dp/B07W7LHVBN?tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+    </article>
+    <article class="product-card" data-category="tecnologia" data-name="samsung t7 shield ssd portatil 1tb usb c">
+      <div class="product-art orange" aria-hidden="true">💾</div>
+      <div class="product-body"><span class="tag">Tecnología</span><h3>Samsung T7 Shield SSD Portátil 1TB</h3><p>SSD externo compacto con conexión USB-C para copias de seguridad y traslado de archivos entre equipos compatibles.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/dp/B09SBDWXD8?tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+    </article>`);
+}
+
 const cards = [...document.querySelectorAll('.product-card')];
 const categoryButtons = [...document.querySelectorAll('.category')];
 const searchInput = document.querySelector('#searchInput');
@@ -128,7 +156,12 @@ const decisionProfiles = [
   {ideal:'Notificaciones, llamadas y seguimiento general de actividad desde la muñeca.',strong:'Llamadas Bluetooth, pantalla de 1,85 pulgadas y varios sensores.',check:'Las funciones de bienestar no sustituyen equipos médicos; revisa además compatibilidad y autonomía.'},
   {ideal:'Trabajo, estudio y viajes con portátil de hasta 15,6 pulgadas.',strong:'Compartimento para portátil, diseño antirrobo, material impermeable y puerto USB.',check:'Comprueba medidas reales del portátil, capacidad y comodidad para el peso que llevarás.'},
   {ideal:'Películas y entretenimiento en dormitorios o espacios donde puedas controlar la luz.',strong:'Formato portátil con Android 11, WiFi 6, Bluetooth y giro de 180°.',check:'Prioriza resolución nativa, brillo real y distancia de proyección, no solo la etiqueta “4K”.'},
-  {ideal:'Viajes, oficina o camping cuando quieres preparar café fuera de casa.',strong:'Formato portátil compatible con cápsulas y café molido.',check:'Confirma si calienta el agua por sí sola, la alimentación y la limpieza necesaria.'}
+  {ideal:'Viajes, oficina o camping cuando quieres preparar café fuera de casa.',strong:'Formato portátil compatible con cápsulas y café molido.',check:'Confirma si calienta el agua por sí sola, la alimentación y la limpieza necesaria.'},
+  {ideal:'Quien quiere automatizar lámparas o pequeños electrodomésticos y controlar su consumo.',strong:'Compatibilidad Matter, programación y monitorización de energía.',check:'Comprueba la carga máxima, la red Wi‑Fi de 2,4 GHz y el ecosistema que vas a utilizar.'},
+  {ideal:'Quien carga varios dispositivos y también necesita alimentar un portátil compatible.',strong:'Hasta 100W y cuatro puertos en un cargador GaN compacto.',check:'La potencia se reparte al usar varios puertos; revisa también el cable necesario para tu equipo.'},
+  {ideal:'Personas que quieren guardar un historial de peso y seguir tendencias desde el móvil.',strong:'Registro mediante app y estimaciones de composición corporal en un formato doméstico.',check:'Las métricas corporales son orientativas y no sustituyen una medición o valoración médica.'},
+  {ideal:'Trabajo o estudio con portátil, tablet o varios dispositivos Bluetooth.',strong:'Diseño compacto, ligero y clics silenciosos.',check:'Confirma compatibilidad con tu sistema y si prefieres ratón plano o una forma más ergonómica.'},
+  {ideal:'Copias de seguridad, fotografía, vídeo y traslado rápido de archivos.',strong:'1TB en un SSD externo compacto con conexión USB-C.',check:'La velocidad real depende del puerto, cable y equipo; compara además capacidad y precio final.'}
 ];
 
 const decisionStyle = document.createElement('style');
@@ -204,7 +237,12 @@ const preferredProductOrder = [
   'kibfle reloj inteligente mujer hombre smartwatch bluetooth voz llamadas salud deporte',
   'reiie proyector mini 4k 1080p full hd android 11 wifi 6 bluetooth',
   'smartia gafas inteligentes camara ia bluetooth',
-  'maehihw cafetera portatil capsulas multicapsulas cafe molido viajes oficina camping'
+  'maehihw cafetera portatil capsulas multicapsulas cafe molido viajes oficina camping',
+  'tp link tapo p110m enchufe inteligente matter energia',
+  'ugreen nexode cargador usb c 100w 4 puertos gan',
+  'xiaomi smart scale s400 bascula inteligente composicion corporal',
+  'logitech pebble mouse 2 m350s raton bluetooth silencioso',
+  'samsung t7 shield ssd portatil 1tb usb c'
 ];
 
 const productGrid = document.querySelector('#productGrid');
