@@ -33,14 +33,14 @@ jobs:
           set -e
           mkdir -p dist/assets/products
           UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
-          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg' -o dist/assets/products/smartia-amazon.jpg
-          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg' -o dist/assets/products/tapo-p110m-amazon.jpg
-          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg' -o dist/assets/products/renpho-elis1-amazon.jpg
-          curl -L --fail --retry 3 -A "$UA" 'https://expocolsuministros.com/wp-content/uploads/2024/06/mouse-logitech-m350s-pebble-2-bluetooth-grafito-001.jpg' -o dist/assets/products/logitech-m350s.jpg
+          curl -L --fail --retry 3 --retry-all-errors -A "$UA" 'https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg' -o dist/assets/products/smartia-amazon.jpg
+          curl -L --fail --retry 3 --retry-all-errors -A "$UA" 'https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg' -o dist/assets/products/tapo-p110m-amazon.jpg
+          curl -L --fail --retry 3 --retry-all-errors -A "$UA" 'https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg' -o dist/assets/products/renpho-elis1-amazon.jpg
+          curl -L --fail --retry 3 --retry-all-errors -A "$UA" 'https://resource.logitech.com/w_544%2Ch_466%2Car_7%3A6%2Cc_pad%2Cq_auto%2Cf_auto%2Cdpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/pebble-mouse-2-m350s/2026-refresh/gallery/pebble-mouse-2-m350s-tonal-rose-top-angle-gallery-1.png' -o dist/assets/products/logitech-m350s.png
           test -s dist/assets/products/smartia-amazon.jpg
           test -s dist/assets/products/tapo-p110m-amazon.jpg
           test -s dist/assets/products/renpho-elis1-amazon.jpg
-          test -s dist/assets/products/logitech-m350s.jpg
+          test -s dist/assets/products/logitech-m350s.png
 
       - name: Inject product fixes
         shell: bash
@@ -56,7 +56,7 @@ jobs:
               '<script src="renpho-fix.js?v=3"></script>',
               '<script src="logitech-fix.js?v=3"></script>',
               '<script src="samsung-fix.js?v=3"></script>',
-              '<script src="product-image-fix.js?v=20260913-1"></script>',
+              '<script src="product-image-fix.js?v=20260913-2"></script>',
           ]
           for tag in tags:
               if tag not in s:
