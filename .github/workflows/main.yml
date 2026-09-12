@@ -35,12 +35,12 @@ jobs:
           p = Path('dist/index.html')
           s = p.read_text(encoding='utf-8')
           tags = [
-              '<script src="maehihw-fix.js?v=2"></script>',
-              '<script src="tapo-fix.js?v=1"></script>',
-              '<script src="ugreen-fix.js?v=1"></script>',
-              '<script src="renpho-fix.js?v=1"></script>',
-              '<script src="logitech-fix.js?v=1"></script>',
-              '<script src="samsung-fix.js?v=1"></script>',
+              '<script src="maehihw-fix.js?v=3"></script>',
+              '<script src="tapo-fix.js?v=3"></script>',
+              '<script src="ugreen-fix.js?v=3"></script>',
+              '<script src="renpho-fix.js?v=3"></script>',
+              '<script src="logitech-fix.js?v=3"></script>',
+              '<script src="samsung-fix.js?v=3"></script>',
           ]
           for tag in tags:
               if tag not in s:
