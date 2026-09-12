@@ -135,6 +135,7 @@ function applyProductImage(cardName, imagePath, altText, maxSize = '68%') {
 
 applyProductImage('sony wh ch520 auriculares bluetooth','assets/products/IMG_7118.webp','Sony WH-CH520 auriculares Bluetooth','68%');
 applyProductImage('anker nano ii cargador usb c 65w','assets/products/IMG_7125.webp','Anker Nano II Cargador USB-C 65W','62%');
+applyProductImage('anker zolo power bank 20000mah 45w','assets/products/IMG_7129.png','Anker Zolo Power Bank 20.000mAh 45W','62%');
 
 const verifiedRatings=[
   {rating:'4,7',reviews:'14.382'},
