@@ -121,6 +121,18 @@ cards.forEach((card,index)=>{
   art.setAttribute('aria-label',`Representación ilustrativa de ${card.querySelector('h3')?.textContent||'producto'}`);
 });
 
+// Usa la imagen real subida para la tarjeta de Sony WH-CH520.
+const sonyCard = cards.find(card => card.dataset.name === 'sony wh ch520 auriculares bluetooth');
+if (sonyCard) {
+  const art = sonyCard.querySelector('.product-art');
+  if (art) {
+    art.innerHTML = '<img src="assets/products/IMG_7118.webp" alt="Sony WH-CH520 auriculares Bluetooth" loading="lazy" style="width:100%;height:100%;object-fit:contain;display:block;padding:18px;background:#fff">';
+    art.removeAttribute('aria-hidden');
+    art.setAttribute('role','img');
+    art.setAttribute('aria-label','Sony WH-CH520 auriculares Bluetooth');
+  }
+}
+
 const verifiedRatings=[
   {rating:'4,7',reviews:'14.382'},
   {rating:'4,5',reviews:'15.747'},
