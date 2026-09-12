@@ -27,6 +27,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare Maehihw product
+        shell: bash
+        run: |
+          base64 -d dist/assets/products/maehihw-product.b64 > dist/assets/products/maehihw-product.jpg
+          rm dist/assets/products/maehihw-product.b64
+          cat > dist/maehihw-fix.js <<'EOF'
+          (() => {
+            const apply = () => {
+              const card = document.querySelector('[data-name="maehihw cafetera portatil capsulas multicapsulas cafe molido viajes oficina camping"]');
+              if (!card) return;
+              const link = card.querySelector('.offer-button');
+              if (link) link.href = 'https://amzn.to/4da0DT2';
+              const art = card.querySelector('.product-art');
+              if (art) {
+                art.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:0;background:#fff;overflow:hidden;';
+                art.innerHTML = '<img src="assets/products/maehihw-product.jpg" alt="Maehihw Cafetera Portátil Multicápsulas" loading="lazy" style="width:auto;height:auto;max-width:78%;max-height:78%;object-fit:contain;display:block;margin:auto">';
+                art.removeAttribute('aria-hidden');
+                art.setAttribute('role','img');
+                art.setAttribute('aria-label','Maehihw Cafetera Portátil Multicápsulas');
+              }
+            };
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', apply, { once: true });
+            } else {
+              apply();
+            }
+          })();
+          EOF
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('dist/index.html')
+          s = p.read_text(encoding='utf-8')
+          tag = '<script src="maehihw-fix.js?v=1"></script>'
+          if tag not in s:
+              s = s.replace('</body>', f'  {tag}\n</body>')
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
