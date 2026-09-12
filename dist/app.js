@@ -138,6 +138,7 @@ applyProductImage('anker nano ii cargador usb c 65w','assets/products/IMG_7125.w
 applyProductImage('anker zolo power bank 20000mah 45w','assets/products/IMG_7129.png','Anker Zolo Power Bank 20.000mAh 45W','62%');
 applyProductImage('wenig mochila antirrobo impermeable portatil 15.6 usb viaje trabajo','assets/products/IMG_7132.jpeg','WENIG Mochila Antirrobo para Portátil 15,6 pulgadas','70%');
 applyProductImage('robot aspirador roborock qrevo s pro hogar limpieza','assets/products/IMG_7135.jpeg','Robot aspirador Roborock Qrevo S Pro','72%');
+applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/IMG_7155.png','SMARTIA Gafas Inteligentes con Cámara e IA','72%');
 
 const verifiedRatings=[
   {rating:'4,7',reviews:'14.382'},
