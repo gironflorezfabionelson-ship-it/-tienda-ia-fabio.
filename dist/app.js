@@ -121,18 +121,20 @@ cards.forEach((card,index)=>{
   art.setAttribute('aria-label',`Representación ilustrativa de ${card.querySelector('h3')?.textContent||'producto'}`);
 });
 
-// Usa la imagen real subida para la tarjeta de Sony WH-CH520.
-const sonyCard = cards.find(card => card.dataset.name === 'sony wh ch520 auriculares bluetooth');
-if (sonyCard) {
-  const art = sonyCard.querySelector('.product-art');
-  if (art) {
-    art.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:0;background:#fff;overflow:hidden;';
-    art.innerHTML = '<img src="assets/products/IMG_7118.webp" alt="Sony WH-CH520 auriculares Bluetooth" loading="lazy" style="width:auto;height:auto;max-width:68%;max-height:68%;object-fit:contain;display:block;margin:auto">';
-    art.removeAttribute('aria-hidden');
-    art.setAttribute('role','img');
-    art.setAttribute('aria-label','Sony WH-CH520 auriculares Bluetooth');
-  }
+function applyProductImage(cardName, imagePath, altText, maxSize = '68%') {
+  const card = cards.find(item => item.dataset.name === cardName);
+  if (!card) return;
+  const art = card.querySelector('.product-art');
+  if (!art) return;
+  art.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:0;background:#fff;overflow:hidden;';
+  art.innerHTML = `<img src="${imagePath}" alt="${altText}" loading="lazy" style="width:auto;height:auto;max-width:${maxSize};max-height:${maxSize};object-fit:contain;display:block;margin:auto">`;
+  art.removeAttribute('aria-hidden');
+  art.setAttribute('role','img');
+  art.setAttribute('aria-label',altText);
 }
+
+applyProductImage('sony wh ch520 auriculares bluetooth','assets/products/IMG_7118.webp','Sony WH-CH520 auriculares Bluetooth','68%');
+applyProductImage('anker nano ii cargador usb c 65w','assets/products/IMG_7125.webp','Anker Nano II Cargador USB-C 65W','62%');
 
 const verifiedRatings=[
   {rating:'4,7',reviews:'14.382'},
