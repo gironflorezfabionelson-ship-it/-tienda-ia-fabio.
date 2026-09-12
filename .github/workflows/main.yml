@@ -27,6 +27,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download verified product images
+        shell: bash
+        run: |
+          set -e
+          mkdir -p dist/assets/products
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126 Safari/537.36'
+          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg' -o dist/assets/products/smartia-amazon.jpg
+          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg' -o dist/assets/products/tapo-p110m-amazon.jpg
+          curl -L --fail --retry 3 -A "$UA" 'https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg' -o dist/assets/products/renpho-elis1-amazon.jpg
+          curl -L --fail --retry 3 -A "$UA" 'https://expocolsuministros.com/wp-content/uploads/2024/06/mouse-logitech-m350s-pebble-2-bluetooth-grafito-001.jpg' -o dist/assets/products/logitech-m350s.jpg
+          test -s dist/assets/products/smartia-amazon.jpg
+          test -s dist/assets/products/tapo-p110m-amazon.jpg
+          test -s dist/assets/products/renpho-elis1-amazon.jpg
+          test -s dist/assets/products/logitech-m350s.jpg
+
       - name: Inject product fixes
         shell: bash
         run: |
@@ -41,6 +56,7 @@ jobs:
               '<script src="renpho-fix.js?v=3"></script>',
               '<script src="logitech-fix.js?v=3"></script>',
               '<script src="samsung-fix.js?v=3"></script>',
+              '<script src="product-image-fix.js?v=20260913-1"></script>',
           ]
           for tag in tags:
               if tag not in s:
