@@ -126,7 +126,8 @@ const sonyCard = cards.find(card => card.dataset.name === 'sony wh ch520 auricul
 if (sonyCard) {
   const art = sonyCard.querySelector('.product-art');
   if (art) {
-    art.innerHTML = '<img src="assets/products/IMG_7118.webp" alt="Sony WH-CH520 auriculares Bluetooth" loading="lazy" style="width:100%;height:100%;object-fit:contain;display:block;padding:18px;background:#fff">';
+    art.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:0;background:#fff;overflow:hidden;';
+    art.innerHTML = '<img src="assets/products/IMG_7118.webp" alt="Sony WH-CH520 auriculares Bluetooth" loading="lazy" style="width:auto;height:auto;max-width:68%;max-height:68%;object-fit:contain;display:block;margin:auto">';
     art.removeAttribute('aria-hidden');
     art.setAttribute('role','img');
     art.setAttribute('aria-label','Sony WH-CH520 auriculares Bluetooth');
