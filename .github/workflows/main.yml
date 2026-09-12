@@ -38,6 +38,7 @@ jobs:
               '<script src="maehihw-fix.js?v=2"></script>',
               '<script src="tapo-fix.js?v=1"></script>',
               '<script src="ugreen-fix.js?v=1"></script>',
+              '<script src="renpho-fix.js?v=1"></script>',
           ]
           for tag in tags:
               if tag not in s:
