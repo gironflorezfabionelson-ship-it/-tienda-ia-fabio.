@@ -20,9 +20,9 @@ if (initialProductGrid && !initialProductGrid.querySelector('[data-name="tp link
       <div class="product-art blue" aria-hidden="true">⚡</div>
       <div class="product-body"><span class="tag">Tecnología</span><h3>UGREEN Nexode Cargador USB-C 100W</h3><p>Cargador GaN de cuatro puertos pensado para combinar portátil, móvil, tablet y otros accesorios desde un solo adaptador.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/dp/B091TV6LWN?tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a><a class="guide-link" href="guia-cargador-usb-c-100w.html">Leer guía antes de comprar →</a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
     </article>
-    <article class="product-card" data-category="bienestar" data-name="xiaomi smart scale s400 bascula inteligente composicion corporal">
+    <article class="product-card" data-category="bienestar" data-name="renpho elis 1 bascula inteligente composicion corporal">
       <div class="product-art violet" aria-hidden="true">⚖️</div>
-      <div class="product-body"><span class="tag">Bienestar</span><h3>Xiaomi Smart Scale S400</h3><p>Báscula inteligente para seguir el peso y consultar estimaciones de composición corporal desde la aplicación compatible.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://www.amazon.es/s?k=Xiaomi+Smart+Scale+S400&tag=comprasmartia-21" target="_blank" rel="nofollow sponsored noopener">Ver opciones en Amazon <span>→</span></a><a class="guide-link" href="guia-bascula-inteligente.html">Leer guía antes de comprar →</a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
+      <div class="product-body"><span class="tag">Bienestar</span><h3>RENPHO Elis 1 Báscula Inteligente</h3><p>Báscula inteligente para seguir el peso y consultar métricas corporales desde la aplicación compatible.</p><div class="product-meta"><span class="merchant">Amazon España</span><strong>Consulta precio y condiciones</strong></div><div class="product-actions"><a class="offer-button" href="https://amzn.to/4h4QfwY" target="_blank" rel="nofollow sponsored noopener">Ver precio y detalles en Amazon <span>→</span></a><a class="guide-link" href="guia-bascula-inteligente.html">Leer guía antes de comprar →</a></div><p class="affiliate-note">Enlace de afiliado. La compra se realiza directamente en Amazon.</p></div>
     </article>
     <article class="product-card" data-category="tecnologia" data-name="logitech pebble mouse 2 m350s raton bluetooth silencioso">
       <div class="product-art blue" aria-hidden="true">🖱️</div>
@@ -240,7 +240,7 @@ const preferredProductOrder = [
   'maehihw cafetera portatil capsulas multicapsulas cafe molido viajes oficina camping',
   'tp link tapo p110m enchufe inteligente matter energia',
   'ugreen nexode cargador usb c 100w 4 puertos gan',
-  'xiaomi smart scale s400 bascula inteligente composicion corporal',
+  'renpho elis 1 bascula inteligente composicion corporal',
   'logitech pebble mouse 2 m350s raton bluetooth silencioso',
   'samsung t7 shield ssd portatil 1tb usb c'
 ];
