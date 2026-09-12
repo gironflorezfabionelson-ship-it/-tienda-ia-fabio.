@@ -137,6 +137,7 @@ applyProductImage('sony wh ch520 auriculares bluetooth','assets/products/IMG_711
 applyProductImage('anker nano ii cargador usb c 65w','assets/products/IMG_7125.webp','Anker Nano II Cargador USB-C 65W','62%');
 applyProductImage('anker zolo power bank 20000mah 45w','assets/products/IMG_7129.png','Anker Zolo Power Bank 20.000mAh 45W','62%');
 applyProductImage('wenig mochila antirrobo impermeable portatil 15.6 usb viaje trabajo','assets/products/IMG_7132.jpeg','WENIG Mochila Antirrobo para Portátil 15,6 pulgadas','70%');
+applyProductImage('robot aspirador roborock qrevo s pro hogar limpieza','assets/products/IMG_7135.jpeg','Robot aspirador Roborock Qrevo S Pro','72%');
 
 const verifiedRatings=[
   {rating:'4,7',reviews:'14.382'},
