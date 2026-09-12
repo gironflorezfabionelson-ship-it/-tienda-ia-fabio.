@@ -20,7 +20,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
 
     steps:
@@ -42,49 +41,37 @@ jobs:
           test -s dist/assets/products/renpho-elis1-amazon.jpg
           test -s dist/assets/products/logitech-m350s.png
 
-      - name: Build embedded product image fix
+      - name: Use local product images
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import base64, json
+          import re
 
-          files = [
-              ('smartia gafas inteligentes camara ia bluetooth', 'dist/assets/products/smartia-amazon.jpg', 'image/jpeg', 'SMARTIA Gafas Inteligentes con Cámara e IA'),
-              ('tp link tapo p110m enchufe inteligente matter energia', 'dist/assets/products/tapo-p110m-amazon.jpg', 'image/jpeg', 'TP-Link Tapo P110M Enchufe Inteligente Matter'),
-              ('renpho elis 1 bascula inteligente composicion corporal', 'dist/assets/products/renpho-elis1-amazon.jpg', 'image/jpeg', 'RENPHO Elis 1 Báscula Inteligente'),
-              ('logitech pebble mouse 2 m350s raton bluetooth silencioso', 'dist/assets/products/logitech-m350s.png', 'image/png', 'Logitech Pebble Mouse 2 M350s'),
-          ]
-
-          rows = []
-          for name, path, mime, alt in files:
-              data = base64.b64encode(Path(path).read_bytes()).decode('ascii')
-              rows.append([name, f'data:{mime};base64,{data}', alt])
-
-          js = """(() => {\n  const images = %s;\n  images.forEach(([name, src, alt]) => {\n    const card = document.querySelector(`.product-card[data-name=\"${name}\"]`);\n    const art = card?.querySelector('.product-art');\n    if (!art) return;\n    art.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:18px;background:#fff;overflow:hidden;';\n    art.innerHTML = `<img src=\"${src}\" alt=\"${alt}\" loading=\"eager\" style=\"width:auto;height:auto;max-width:82%%;max-height:82%%;object-fit:contain;display:block;margin:auto\">`;\n    art.removeAttribute('aria-hidden');\n    art.setAttribute('role','img');\n    art.setAttribute('aria-label', alt);\n  });\n})();\n""" % json.dumps(rows, ensure_ascii=False)
-          Path('dist/product-image-fix.js').write_text(js, encoding='utf-8')
-          PY
-
-      - name: Inject product fixes
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('dist/index.html')
+          p = Path('dist/app.js')
           s = p.read_text(encoding='utf-8')
-          tags = [
-              '<script src="maehihw-fix.js?v=3"></script>',
-              '<script src="tapo-fix.js?v=3"></script>',
-              '<script src="ugreen-fix.js?v=3"></script>',
-              '<script src="renpho-fix.js?v=3"></script>',
-              '<script src="logitech-fix.js?v=3"></script>',
-              '<script src="samsung-fix.js?v=3"></script>',
-              '<script src="product-image-fix.js?v=20260913-3"></script>',
-          ]
-          for tag in tags:
-              if tag not in s:
-                  s = s.replace('</body>', f'  {tag}\n</body>')
+          replacements = {
+              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg','SMARTIA Gafas Inteligentes con Cámara e IA','78%');":
+              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/smartia-amazon.jpg?v=177','SMARTIA Gafas Inteligentes con Cámara e IA','78%');",
+              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');":
+              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','assets/products/tapo-p110m-amazon.jpg?v=177','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');",
+              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg','RENPHO Elis 1 Báscula Inteligente','76%');":
+              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','assets/products/renpho-elis1-amazon.jpg?v=177','RENPHO Elis 1 Báscula Inteligente','76%');",
+              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=85','Logitech Pebble Mouse 2 M350s','72%');":
+              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','assets/products/logitech-m350s.png?v=177','Logitech Pebble Mouse 2 M350s','72%');",
+          }
+          for old, new in replacements.items():
+              if old not in s:
+                  raise SystemExit('Missing expected product image mapping')
+              s = s.replace(old, new)
           p.write_text(s, encoding='utf-8')
+
+          h = Path('dist/index.html')
+          html = h.read_text(encoding='utf-8')
+          html = re.sub(r'<script src="app\.js\?v=[^"]+"></script>', '<script src="app.js?v=177"></script>', html)
+          html = re.sub(r'\n\s*<script src="(?:maehihw|tapo|ugreen|renpho|logitech|samsung)-fix\.js\?v=[^"]+"></script>', '', html)
+          html = re.sub(r'\n\s*<script src="product-image-fix\.js\?v=[^"]+"></script>', '', html)
+          h.write_text(html, encoding='utf-8')
           PY
 
       - name: Setup Pages
