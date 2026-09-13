@@ -52,13 +52,13 @@ jobs:
           s = p.read_text(encoding='utf-8')
           replacements = {
               "applyProductImage('smartia gafas inteligentes camara ia bluetooth','https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg','SMARTIA Gafas Inteligentes con Cámara e IA','78%');":
-              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/smartia-amazon.jpg?v=180','SMARTIA Gafas Inteligentes con Cámara e IA','78%');",
+              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/smartia-amazon.jpg?v=182','SMARTIA Gafas Inteligentes con Cámara e IA','78%');",
               "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');":
-              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','assets/products/tapo-p110m-amazon.jpg?v=180','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');",
+              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','assets/products/tapo-p110m-amazon.jpg?v=182','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');",
               "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg','RENPHO Elis 1 Báscula Inteligente','76%');":
-              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','assets/products/renpho-elis1-amazon.jpg?v=180','RENPHO Elis 1 Báscula Inteligente','76%');",
+              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','assets/products/renpho-elis1-amazon.jpg?v=182','RENPHO Elis 1 Báscula Inteligente','76%');",
               "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=85','Logitech Pebble Mouse 2 M350s','72%');":
-              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','assets/products/logitech-m350s.png?v=180','Logitech Pebble Mouse 2 M350s','72%');",
+              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','assets/products/logitech-m350s.png?v=182','Logitech Pebble Mouse 2 M350s','72%');",
           }
           for old, new in replacements.items():
               if old not in s:
@@ -68,11 +68,11 @@ jobs:
 
           h = Path('dist/index.html')
           html = h.read_text(encoding='utf-8')
-          html = re.sub(r'<script src="app\.js\?v=[^"]+"></script>', '<script src="app.js?v=180"></script>', html)
+          html = re.sub(r'<script src="app\.js\?v=[^"]+"></script>', '<script src="app.js?v=182"></script>', html)
           html = re.sub(r'\n\s*<script src="(?:maehihw|tapo|ugreen|renpho|logitech|samsung)-fix\.js\?v=[^"]+"></script>', '', html)
           html = re.sub(r'\n\s*<script src="product-image-fix\.js\?v=[^"]+"></script>', '', html)
           html = re.sub(r'\n\s*<script src="traffic-start\.js\?v=[^"]+"></script>', '', html)
-          html = html.replace('</body>', '  <script src="maehihw-fix.js?v=180"></script>\n  <script src="ugreen-fix.js?v=180"></script>\n  <script src="samsung-fix.js?v=180"></script>\n  <script src="traffic-start.js?v=180"></script>\n</body>')
+          html = html.replace('</body>', '  <script src="maehihw-fix.js?v=182"></script>\n  <script src="ugreen-fix.js?v=182"></script>\n  <script src="samsung-fix.js?v=182"></script>\n  <script src="traffic-start.js?v=182"></script>\n</body>')
           h.write_text(html, encoding='utf-8')
           PY
 
