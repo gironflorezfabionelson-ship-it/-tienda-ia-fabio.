@@ -48,7 +48,7 @@ jobs:
           from pathlib import Path
           import re
 
-          p = Path('dist/app.js')
+          p = Path('dist/app-core.js')
           s = p.read_text(encoding='utf-8')
           replacements = {
               "applyProductImage('smartia gafas inteligentes camara ia bluetooth','https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg','SMARTIA Gafas Inteligentes con Cámara e IA','78%');":
