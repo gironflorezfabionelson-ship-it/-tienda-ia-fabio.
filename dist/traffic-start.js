@@ -3,9 +3,34 @@
     const smartia = document.querySelector('.product-card[data-name="smartia gafas inteligentes camara ia bluetooth"] .offer-button');
     if (smartia) smartia.href = 'https://amzn.to/4xUI5yH';
 
+    window.dataLayer = window.dataLayer || [];
+
     const sendEvent = (name, params = {}) => {
+      const payload = {
+        ...params,
+        page_path: location.pathname,
+        page_title: document.title,
+        event_timestamp_ms: Date.now()
+      };
+
       try {
-        if (typeof window.gtag === 'function') window.gtag('event', name, params);
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', name, payload);
+          return;
+        }
+      } catch (_) {}
+
+      try {
+        window.dataLayer.push({ event: name, ...payload });
+      } catch (_) {}
+    };
+
+    const saveLocalClick = (productKey) => {
+      try {
+        const key = 'comprasmart-affiliate-clicks';
+        const current = JSON.parse(localStorage.getItem(key) || '{}');
+        current[productKey] = (current[productKey] || 0) + 1;
+        localStorage.setItem(key, JSON.stringify(current));
       } catch (_) {}
     };
 
@@ -18,12 +43,15 @@
       if (offer && !offer.dataset.trackingReady) {
         offer.dataset.trackingReady = '1';
         offer.addEventListener('click', () => {
+          saveLocalClick(productKey);
           sendEvent('affiliate_click', {
             product_name: title || productKey,
+            product_key: productKey,
             affiliate_url: offer.href,
-            merchant: 'Amazon España'
+            merchant: 'Amazon España',
+            link_domain: (() => { try { return new URL(offer.href).hostname; } catch (_) { return ''; } })()
           });
-        });
+        }, { capture: true });
       }
 
       if (!actions || !title || actions.querySelector('.share-product-button')) return;
@@ -43,7 +71,7 @@
         });
         const url = `${location.origin}${location.pathname}?${params.toString()}#productos`;
         const text = `${title} en CompraSmart IA`;
-        sendEvent('share_product', { product_name: title, method: 'native_share' });
+        sendEvent('share_product', { product_name: title, product_key: productKey, method: 'native_share' });
         try {
           if (navigator.share) {
             await navigator.share({ title, text, url });
@@ -58,6 +86,8 @@
 
       actions.appendChild(share);
     });
+
+    sendEvent('tracking_ready', { product_cards: document.querySelectorAll('.product-card').length });
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
