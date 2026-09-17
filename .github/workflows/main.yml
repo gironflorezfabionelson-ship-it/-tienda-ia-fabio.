@@ -52,13 +52,13 @@ jobs:
           s = p.read_text(encoding='utf-8')
           replacements = {
               "applyProductImage('smartia gafas inteligentes camara ia bluetooth','https://m.media-amazon.com/images/I/71UAATIXJ3L._AC_SL1500_.jpg','SMARTIA Gafas Inteligentes con Cámara e IA','78%');":
-              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/smartia-amazon.jpg?v=184','SMARTIA Gafas Inteligentes con Cámara e IA','78%');",
+              "applyProductImage('smartia gafas inteligentes camara ia bluetooth','assets/products/smartia-amazon.jpg?v=185','SMARTIA Gafas Inteligentes con Cámara e IA','78%');",
               "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','https://m.media-amazon.com/images/I/610Q8Ni5YlL._AC_SL1500_.jpg','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');":
-              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','assets/products/tapo-p110m-amazon.jpg?v=184','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');",
+              "applyProductImage('tp link tapo p110m enchufe inteligente matter energia','assets/products/tapo-p110m-amazon.jpg?v=185','TP-Link Tapo P110M Enchufe Inteligente Matter','74%');",
               "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','https://m.media-amazon.com/images/I/61qrw8pAVNL._SL1500_.jpg','RENPHO Elis 1 Báscula Inteligente','76%');":
-              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','assets/products/renpho-elis1-amazon.jpg?v=184','RENPHO Elis 1 Báscula Inteligente','76%');",
+              "applyProductImage('renpho elis 1 bascula inteligente composicion corporal','assets/products/renpho-elis1-amazon.jpg?v=185','RENPHO Elis 1 Báscula Inteligente','76%');",
               "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=85','Logitech Pebble Mouse 2 M350s','72%');":
-              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','assets/products/logitech-m350s.png?v=184','Logitech Pebble Mouse 2 M350s','72%');",
+              "applyProductImage('logitech pebble mouse 2 m350s raton bluetooth silencioso','assets/products/logitech-m350s.png?v=185','Logitech Pebble Mouse 2 M350s','72%');",
           }
           for old, new in replacements.items():
               if old not in s:
@@ -66,19 +66,55 @@ jobs:
               s = s.replace(old, new)
           p.write_text(s, encoding='utf-8')
 
+          measurement_id = 'G-P9YPJ2SYYQ'
+          ga_tag = f'''  <!-- Google tag (gtag.js) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id={measurement_id}"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){{dataLayer.push(arguments);}}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', '{measurement_id}');
+          </script>
+          '''
+          affiliate_tracker = '''  <script data-comprasmart-affiliate-tracker>
+          document.addEventListener('click', function (event) {
+            const link = event.target.closest('a[href]');
+            if (!link) return;
+            const href = link.href || '';
+            if (!/https?:\\/\\/(www\\.)?(amazon\\.es|amzn\\.to)\\//i.test(href)) return;
+            try {
+              if (typeof window.gtag === 'function') {
+                window.gtag('event', 'affiliate_click', {
+                  affiliate_url: href,
+                  link_text: (link.textContent || '').trim().slice(0, 120),
+                  page_path: window.location.pathname,
+                  merchant: 'Amazon España',
+                  click_placement: 'guide_or_selection'
+                });
+              }
+            } catch (_) {}
+          }, true);
+          </script>
+          '''
+
+          for page in Path('dist').rglob('*.html'):
+              html = page.read_text(encoding='utf-8')
+              if '<head' not in html.lower() or '</body>' not in html.lower():
+                  continue
+              if measurement_id not in html:
+                  html = re.sub(r'(<head[^>]*>\s*)', lambda m: m.group(1) + ga_tag, html, count=1, flags=re.I)
+              if page.name != 'index.html' and 'data-comprasmart-affiliate-tracker' not in html:
+                  html = re.sub(r'</body>', affiliate_tracker + '</body>', html, count=1, flags=re.I)
+              page.write_text(html, encoding='utf-8')
+
           h = Path('dist/index.html')
           html = h.read_text(encoding='utf-8')
-
-          measurement_id = 'G-P9YPJ2SYYQ'
-          ga_tag = f'''  <!-- Google tag (gtag.js) -->\n  <script async src="https://www.googletagmanager.com/gtag/js?id={measurement_id}"></script>\n  <script>\n    window.dataLayer = window.dataLayer || [];\n    function gtag(){{dataLayer.push(arguments);}}\n    window.gtag = gtag;\n    gtag('js', new Date());\n    gtag('config', '{measurement_id}');\n  </script>\n'''
-          if measurement_id not in html:
-              html = html.replace('<head>\n', '<head>\n' + ga_tag, 1)
-
-          html = re.sub(r'<script src="app\.js\?v=[^"]+"></script>', '<script src="app.js?v=184"></script>', html)
+          html = re.sub(r'<script src="app\.js\?v=[^"]+"></script>', '<script src="app.js?v=185"></script>', html)
           html = re.sub(r'\n\s*<script src="(?:maehihw|tapo|ugreen|renpho|logitech|samsung)-fix\.js\?v=[^"]+"></script>', '', html)
           html = re.sub(r'\n\s*<script src="product-image-fix\.js\?v=[^"]+"></script>', '', html)
           html = re.sub(r'\n\s*<script src="traffic-start\.js\?v=[^"]+"></script>', '', html)
-          html = html.replace('</body>', '  <script src="maehihw-fix.js?v=184"></script>\n  <script src="ugreen-fix.js?v=184"></script>\n  <script src="samsung-fix.js?v=184"></script>\n  <script src="traffic-start.js?v=184"></script>\n</body>')
+          html = html.replace('</body>', '  <script src="maehihw-fix.js?v=185"></script>\n  <script src="ugreen-fix.js?v=185"></script>\n  <script src="samsung-fix.js?v=185"></script>\n  <script src="traffic-start.js?v=185"></script>\n</body>')
           h.write_text(html, encoding='utf-8')
           PY
 
