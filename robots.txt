@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gironflorezfabionelson-ship-it.github.io/-tienda-ia-fabio./sitemap.xml
